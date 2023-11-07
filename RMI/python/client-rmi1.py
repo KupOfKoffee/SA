@@ -1,9 +1,9 @@
 import Pyro4
 
-# Connect to the Pyro daemon on the server
-uri = "PYRO:obj_36b9a492100f4f0f82511c6869618c17@localhost:50000"
-calculator = Pyro4.Proxy(uri)
+# Look up the object using the name from the naming service
+with Pyro4.locateNS() as ns:
+    uri = ns.lookup("my_calculator")
 
-# Use the Calculator object as if it were a local object
+calculator = Pyro4.Proxy(uri)
 result = calculator.add(5, 3)
 print(f"The result is: {result}")
