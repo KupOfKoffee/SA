@@ -1,19 +1,15 @@
 import Pyro4
 
-@Pyro4.expose
 class Calculator:
     def add(self, a, b):
         return a + b
 
-# Create a Pyro daemon
 daemon = Pyro4.Daemon()
+uri = daemon.register(Calculator())
 
-# Register the Calculator object with the Pyro daemon
-calculator = Calculator()
-uri = daemon.register(calculator)
+# Register the object with a name in the Pyro4 naming service
+with Pyro4.locateNS() as ns:
+    ns.register("my_calculator", uri)
 
-# Print the URI of the object
 print(f"URI: {uri}")
-
-# Start the event loop
 daemon.requestLoop()
