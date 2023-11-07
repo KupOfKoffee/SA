@@ -1,0 +1,13 @@
+terminal 1
+
+Java RMI
+javac *.java
+rmiregistry 5001
+
+terminal 2
+
+java ServerName
+
+terminal 3
+
+java Client
